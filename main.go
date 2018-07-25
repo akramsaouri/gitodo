@@ -7,16 +7,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/joho/godotenv"
 	"github.com/shurcooL/graphql"
 	"golang.org/x/oauth2"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
 	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_ACCESS_TOKEN")},
 	)
@@ -39,7 +34,7 @@ func main() {
 			} `graphql:"repositories(last: 100, isFork: false, affiliations: [OWNER]) "`
 		} `graphql:"viewer"`
 	}
-	err = client.Query(context.Background(), &query, nil)
+	err := client.Query(context.Background(), &query, nil)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
