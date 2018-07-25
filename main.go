@@ -46,13 +46,19 @@ func main() {
 		if lastIndex == -1 {
 			continue
 		}
-		fmt.Printf("# %s (%s)\n\n", node.Name, node.URL)
 		lines := strings.Split(text[lastIndex:], "\n")
-		for index, line := range lines {
-			if index != 0 && line != "" {
-				fmt.Println(line)
+		if len(lines) > 1 {
+			var todos []string
+			for index, line := range lines {
+				if index != 0 && line != "" {
+					todos = append(todos, line)
+				}
+			}
+			if len(todos) > 0 {
+				fmt.Printf("# %s (%s)\n\n", node.Name, node.URL)
+				fmt.Println(strings.Join(todos, "\n"))
+				fmt.Print(strings.Repeat("-", 80) + "\n\n")
 			}
 		}
-		fmt.Print(strings.Repeat("-", 80) + "\n\n")
 	}
 }
