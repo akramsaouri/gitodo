@@ -1,7 +1,9 @@
 # gitodo
+> List your readme todos on github.  
 
 ## Usage 
 `$ go get https://github.com/akramsaouri/gitodo`
+
 `$ GITHUB_ACCESS_TOKEN="xxxxxxxxxxxxxxxxxxxxxx" gitodo`
 
 ## Limitations
