@@ -1,8 +1,12 @@
-# keep-me-busy
+# gitodo
+
+## Usage 
+`$ go get https://github.com/akramsaouri/gitodo`
+`$ GITHUB_ACCESS_TOKEN="xxxxxxxxxxxxxxxxxxxxxx" gitodo`
 
 ## Limitations
-- Only researchs under `master` branch
-- Is specifically looking for the `TODO` title
+- Only look for readmes under the `master` branch.
+- Is specifically looking for the `## TODO` markdown as title for todos.
 
 ## TODO
-- Add concurrecy for parsing readmes
+- Add concurrecy for parsing readmes.
