@@ -12,11 +12,15 @@ import (
 )
 
 func main() {
+
+	// authenticate with github oauth
 	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_ACCESS_TOKEN")},
 	)
 	httpClient := oauth2.NewClient(context.Background(), src)
 	client := graphql.NewClient("https://api.github.com/graphql", httpClient)
+
+	// build and query readmes for all owned repos under master branch
 	var query struct {
 		Viewer struct {
 			Repositories struct {
@@ -39,23 +43,28 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
+	// parse readme lines and build todos
 	for _, edge := range query.Viewer.Repositories.Edges {
-		node := edge.Node
-		text := string(node.Object.Blob.Text)
-		lastIndex := strings.LastIndex(text, "## TODO")
-		if lastIndex == -1 {
+		repo := edge.Node
+		readme := string(repo.Object.Blob.Text)
+		todoIndex := strings.LastIndex(readme, "## TODO")
+		if todoIndex == -1 {
+			// no matches were found
 			continue
 		}
-		lines := strings.Split(text[lastIndex:], "\n")
+		lines := strings.Split(readme[todoIndex:], "\n")
 		if len(lines) > 1 {
+			// todo section is not empty
 			var todos []string
-			for index, line := range lines {
-				if index != 0 && line != "" {
+			// gather todos
+			for i := 1; i < len(lines); i++ {
+				line := lines[i]
+				if line != "" {
 					todos = append(todos, line)
 				}
 			}
 			if len(todos) > 0 {
-				fmt.Printf("# %s (%s)\n\n", node.Name, node.URL)
+				fmt.Printf("# %s (%s)\n\n", repo.Name, repo.URL)
 				fmt.Println(strings.Join(todos, "\n"))
 				fmt.Print(strings.Repeat("-", 80) + "\n\n")
 			}
