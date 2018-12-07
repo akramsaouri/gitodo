@@ -1,5 +1,5 @@
 # gitodo
-> List your readme todos on github.  
+> Lists your readme todos on github.  
 
 ## Usage 
 `$ go get https://github.com/akramsaouri/gitodo`
