@@ -2,7 +2,9 @@
 > Lists your readme todos on github.  
 
 ## Usage 
-`$ go get https://github.com/akramsaouri/gitodo`
+* Create [Github token](https://github.com/settings/tokens/new) with `repo` scope
+
+`$ go get github.com/akramsaouri/gitodo`
 
 `$ GITHUB_ACCESS_TOKEN="xxxxxxxxxxxxxxxxxxxxxx" gitodo`
 
