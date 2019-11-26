@@ -12,3 +12,4 @@
 
 ## TODO
 - Add concurrecy for parsing readmes.
+- Skip archived repos.
